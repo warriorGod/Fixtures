@@ -104,13 +104,13 @@ class FixtureManager implements FixtureManagerInterface
     public function load($path = null, array $options = [])
     {
         $event = new FixtureEvent($this, $options);
-        $this->eventDispatcher->dispatch(FixtureEvents::onPreLoad, $event);
+        $this->eventDispatcher->dispatch($event, FixtureEvents::onPreLoad);
         $options = $event->getOptions();
 
         $collection = $this->loader->load($path);
 
         $event = new FixtureCollectionEvent($this, $collection, $options);
-        $this->eventDispatcher->dispatch(FixtureEvents::onPreExecute, $event);
+        $this->eventDispatcher->dispatch($event, FixtureEvents::onPreExecute);
         $collection = $event->getCollection();
         $options = $event->getOptions();
 
@@ -118,14 +118,14 @@ class FixtureManager implements FixtureManagerInterface
         $this->replaceServicePlaceholder($collection);
 
         $event = new FixtureCollectionEvent($this, $collection, $options);
-        $this->eventDispatcher->dispatch(FixtureEvents::onPreExecute, $event);
+        $this->eventDispatcher->dispatch($event, FixtureEvents::onPreExecute);
         $collection = $event->getCollection();
         $options = $event->getOptions();
 
         $this->executor->execute($collection);
 
         $event = new FixtureCollectionEvent($this, $collection, $options);
-        $this->eventDispatcher->dispatch(FixtureEvents::onPostExecute, $event);
+        $this->eventDispatcher->dispatch($event, FixtureEvents::onPostExecute);
         $collection = $event->getCollection();
         $options = $event->getOptions();
 
@@ -136,7 +136,7 @@ class FixtureManager implements FixtureManagerInterface
         $this->persist($collection);
 
         $event = new FixtureCollectionEvent($this, $collection, $options);
-        $this->eventDispatcher->dispatch(FixtureEvents::onPostPersist, $event);
+        $this->eventDispatcher->dispatch($event, FixtureEvents::onPostPersist);
     }
 
     protected function persist(FixtureCollection $collection)
