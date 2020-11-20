@@ -160,7 +160,7 @@ class FixtureManager implements FixtureManagerInterface
 
                 array_walk_recursive($data, function (&$item, &$key) use ($provider) {
                     $matches = [];
-                    if (preg_match(FixtureManager::SERVICE_PLACEHOLDER_PATTERN, $item, $matches)) {
+                    if (is_string($item) && preg_match(FixtureManager::SERVICE_PLACEHOLDER_PATTERN, $item, $matches)) {
                         $service = $provider->get($matches[1]);
                         $attributes = explode(',', $matches[3]);
                         $item = call_user_func_array([$service, $matches[2]], $attributes);
