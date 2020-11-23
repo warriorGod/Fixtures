@@ -2,7 +2,7 @@
 
 namespace DavidBadura\Fixtures\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use DavidBadura\Fixtures\FixtureManager\FixtureManagerInterface;
 
 /**
